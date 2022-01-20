@@ -49,9 +49,12 @@ class Action
 
     case @type
     when 'HTTPRequestAction'
-      http_request_action(params_to_search_for)
+      data = http_request_action
+      dig_for_params(params_to_search_for, data)
     when 'PrintAction'
-      puts options['message'].tr('{}', '')
+      message = options['message'].tr('{}', '')
+      puts message
+      message
     else
       'none'
     end
@@ -63,9 +66,8 @@ class Action
 
   def print_action; end
 
-  def http_request_action(params_to_search_for)
-    data = JSON.parse(http_request(options['url']))
-    dig_for_params(params_to_search_for, data)
+  def http_request_action
+    JSON.parse(http_request(options['url']))
   end
 
   def validate_options

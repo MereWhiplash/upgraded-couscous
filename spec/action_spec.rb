@@ -9,35 +9,63 @@ RSpec.describe Action, '#Actions' do
 
   let(:action) { Action.new(name, type, options) }
 
-  context 'with required params' do
-    it 'is valid' do
-      expect(action.valid?).to eq true
+  context '#validate' do
+    context 'with required params' do
+      it 'is valid' do
+        expect(action.valid?).to eq true
+      end
+    end
+
+    context 'without required params' do
+      context 'like name' do
+        let(:name) { nil }
+
+        it 'is not valid' do
+          expect(action.valid?).to eq false
+        end
+      end
+
+      context 'like type' do
+        let(:type) { nil }
+
+        it 'is not valid' do
+          expect(action.valid?).to eq false
+        end
+      end
+
+      context 'like options' do
+        let(:options) { nil }
+
+        it 'is not valid' do
+          expect(action.valid?).to eq false
+        end
+      end
     end
   end
 
-  context 'without required params' do
-    context 'like name' do
-      let(:name) { nil }
+  context '#execute' do
+    let(:params_to_search_for) { %w[location.city location.country sunset.results.sunset] }
+    let(:params_with_values) do
+      {
+        'location.country' => 'Ireland',
+        'location.city' => 'Naas',
+        'location.latitude' => 53.2205654,
+        'location.longitude' => -6.6593079,
+        'sunset.results.sunset' => '6:15:42 PM'
+      }
+    end
 
-      it 'is not valid' do
-        expect(action.valid?).to eq false
+    let(:options) do
+      { 'message' => 'Sunset in {{location.city}}, {{location.country}} is at {{sunset.results.sunset}}.' }
+    end
+
+    context 'with params to with values for' do
+      it 'should return the formatted message' do
+        expect(action.execute(params_to_search_for,
+                              params_with_values)).to eq('Sunset in Naas, Ireland is at 6:15:42 PM.')
       end
     end
 
-    context 'like type' do
-      let(:type) { nil }
-
-      it 'is not valid' do
-        expect(action.valid?).to eq false
-      end
-    end
-
-    context 'like options' do
-      let(:options) { nil }
-
-      it 'is not valid' do
-        expect(action.valid?).to eq false
-      end
-    end
+    context
   end
 end
