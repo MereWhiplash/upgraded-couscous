@@ -28,7 +28,7 @@ class Story
       action = queue.pop
 
       new_data = action.execute(flattened_params, data_bank)
-      data_bank = data_bank.merge(new_data) unless new_data.nil?
+      data_bank = data_bank.merge(new_data) unless @queue.empty? || new_data.nil?
     end
   end
 

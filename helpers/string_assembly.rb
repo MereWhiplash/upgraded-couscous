@@ -3,8 +3,8 @@
 # Naming this module broke me
 module StringAssembly
   def extract_params(string)
-    strings = string.scan(/{{.*?}}/)
-    strings.map { |param| param.tr('{}', '') }
+    strings = string.scan(/{{[^}]*}}/)
+    strings.map { |s| s.tr('{}', '') }
   end
 
   def add_values_to_string(values, string)
