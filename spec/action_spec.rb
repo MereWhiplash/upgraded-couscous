@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../Action'
+require_relative '../action'
 
 RSpec.describe Action, '#Actions' do
   let(:name) { 'ActionName' }
