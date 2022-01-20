@@ -61,6 +61,8 @@ RSpec.describe Action, '#Actions' do
 
     context 'with params to with values for' do
       it 'should return the formatted message' do
+        action.for_spec = true
+
         expect(action.execute(params_to_search_for,
                               params_with_values)).to eq('Sunset in Naas, Ireland is at 6:15:42 PM.')
       end
@@ -77,6 +79,7 @@ RSpec.describe Action, '#Actions' do
       end
 
       it 'should return the formatted message' do
+        action.for_spec = true
         expect(action.execute(params_to_search_for,
                               params_with_values)).to eq('Sunset in , Ireland is at 6:15:42 PM.')
       end

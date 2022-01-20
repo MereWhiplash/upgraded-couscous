@@ -10,7 +10,7 @@ module StringAssembly
   def add_values_to_string(values, string)
     required_values = extract_params(string)
     required_values.each do |required_value|
-      string = string.gsub(required_value, values[required_value].to_s)
+      string = string.gsub("{{#{required_value}}}", values[required_value].to_s)
     end
     string
   end

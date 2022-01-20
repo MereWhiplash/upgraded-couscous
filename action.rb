@@ -14,7 +14,9 @@ class Action
 
   validates_presence_of :type, :name, :options
   validate :validate_options, :validate_types
-  attr_accessor :type, :name, :options
+  attr_accessor :type, :name, :options, :for_spec
+
+  @for_spec = false
 
   def initialize(name, type, options)
     @name = name
@@ -54,7 +56,10 @@ class Action
     when 'PrintAction'
       message = options['message'].tr('{}', '')
       puts message
-      message
+
+      return message if @for_spec
+
+      []
     else
       'none'
     end
@@ -92,9 +97,11 @@ class Action
     data_with_values = {}
 
     data.each_key do |data_key|
+      next if params_for_key(data_key, params_to_search_for).blank?
+
       if data[data_key].is_a? Hash
         nested_hash = dig_for_params(params_to_search_for, data[data_key])
-        data_with_values = data_with_values.merge(nested_hash) unless nested_hash.empty?
+        data_with_values = nested_hash.merge(data_with_values) unless nested_hash.blank?
         next
       end
 
