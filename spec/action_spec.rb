@@ -66,6 +66,20 @@ RSpec.describe Action, '#Actions' do
       end
     end
 
-    context
+    context 'with one missing param for value' do
+      let(:params_with_values) do
+        {
+          'location.country' => 'Ireland',
+          'location.latitude' => 53.2205654,
+          'location.longitude' => -6.6593079,
+          'sunset.results.sunset' => '6:15:42 PM'
+        }
+      end
+
+      it 'should return the formatted message' do
+        expect(action.execute(params_to_search_for,
+                              params_with_values)).to eq('Sunset in , Ireland is at 6:15:42 PM.')
+      end
+    end
   end
 end
