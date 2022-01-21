@@ -34,3 +34,5 @@ are useful to double check. Story tests could use some executions and `expects` 
 The concept of passing the hash of the previous event is 100% valid in the **Big Tines** I'd imagine, but in this scenario, 
 it seems that each action really only cares about trying to get a response if its a http request of some kind, since strings are allowed to have empty values too I see no need.
 
+Rare that a problem keeps me up until 2am, I was over complicating the digs for data. Found my ruby knowledge lacking but 
+its been less than 1 year. Code could be more efficient, lots of looping loops. Now that I have a valid passing test Ill need to fix the tests.

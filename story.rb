@@ -17,8 +17,6 @@ class Story
     @story_params = []
 
     @actions.each do |action|
-      @story_params << action.required_params if action.requires_params?
-
       @queue << action
     end
   end
@@ -31,7 +29,7 @@ class Story
     until @queue.empty?
       action = queue.pop
 
-      new_data = action.execute(@story_params.flatten, data_bank)
+      new_data = action.execute(data_bank)
       data_bank = data_bank.merge(new_data) unless @queue.empty? || new_data.blank?
     end
   end
