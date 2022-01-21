@@ -2,6 +2,7 @@
 
 # Naming this module broke me
 module StringAssembly
+  # trust me this regex works.
   def extract_params(string)
     strings = string.scan(/{{[^}]*}}/)
     strings.map { |s| s.tr('{}', '') }

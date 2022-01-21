@@ -29,22 +29,6 @@ class Action
     run_action(params_with_values)
   end
 
-  def requires_params?
-    @options.each_value do |option|
-      return true if option.include?('{{') || option.include?('}}')
-    end
-
-    false
-  end
-
-  def required_params
-    params = []
-    @options.each_value do |option|
-      params << extract_params(option)
-    end
-    params
-  end
-
   private
 
   def run_action(params_with_values)
@@ -70,8 +54,6 @@ class Action
     @options.each { |key, value| @options[key] = add_values_to_string(params_with_values, value) }
   end
 
-  def print_action; end
-
   def http_request_action
     JSON.parse(http_request(options['url']))
   end
@@ -94,13 +76,11 @@ class Action
     VALID_TYPES.include?(@type)
   end
 
-  # This was the failed attempts, I was trying to be cute by only looking for params that I know the story needs,
-  # you can see other methods showing this approach in the class Im leaving it here because it should give an idea of
-  # my thought process.
+  # This was the failed attempts/
   # The REASON to go this way was I could short circuit once the params are filled since perhaps the data returned
   # could be bigger than the params the story needs. Finding the right approach was then a case of going
   # back to the requirements and internalising "(that must itself be a valid JSON key)", then it found home.
-  # I normally dont comment this much IRL
+  # I normally dont comment like this much IRL
   def dig_for_params(params_to_search_for, data)
     data_with_values = {}
 
